@@ -1,0 +1,20 @@
+<li class="comment" xmlns:th="http://www.thymeleaf.org" th:fragment="commentSection">
+<!--/*@thymesVar id="comment" type="online.shixun.demo.elearning.dto.Comment"*/-->
+<article class="clear-float">
+    <div class="comment-avatar">
+        <img th:src="${comment.student.image}" alt="image">
+    </div>
+    <div class="comment-detail">
+        <div class="comment-meta">
+            <p class="comment-author"><a href="#">
+                <th th:text="${comment.student.name}"></th>
+            </a></p>
+            <p class="comment-date"><a href="">
+                <th th:text="${#dates.format(comment.createTime,'yyyy-MM-dd hh:mm')}"></th>
+            </a></p>
+        </div>
+
+        <p class="comment-body"><th th:text="${comment.content}"></th></p>
+    </div>
+</article>
+</li>

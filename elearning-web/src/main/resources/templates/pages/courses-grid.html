@@ -1,0 +1,112 @@
+<div layout:fragment="content" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/default}" th:with="menuCode='course'">
+<section class="main-content blog-posts flat-row course-grid">
+    <div class="container">
+        <div class="blog-title clearfix">
+            <h1 class="bold">所有课程</h1>
+        </div>
+        <div class="row">
+            <div class="flat-post-ordering clearfix">
+                <div class="sort-views">
+                    <!--课程的分类开始-->
+                    <label class="modern-select">
+                        <select name="select_category" class="orderby" id="select_category">
+                            <option value="-1" selected="selected">选择分类</option>
+                            <option th:each="courseCategory:${courseCategories}" th:value="${courseCategory.id}">
+                                <th th:text="${courseCategory.name}"></th>
+                            </option>
+                        </select>
+                    </label>
+                    <!--课程的分类结束-->
+                    <!--课程的排序按钮开始-->
+                    <label class="modern-select">
+                        <select name="select_category" class="orderby">
+                            <option value="menu_order" selected="selected">排序</option>
+                            <option value="newest">升序</option>
+                            <option value="oldest">降序</option>
+                        </select>
+                    </label>
+                    <!--课程的排序按钮结束-->
+                    <!--课程列表的展示形式按钮开始-->
+                    <div class="list-grid">
+                        <a data-layout="course-grid" class="course-grid-view active" href="#"><i class="fa fa-th"
+                                                                                                 aria-hidden="true"></i></a>
+                        <a data-layout="course-list" class="course-list-view" href="#"><i class="fa fa-list"
+                                                                                          aria-hidden="true"></i></a>
+                    </div>
+                    <!--课程列表的展示形式按钮结束-->
+                </div>
+            </div>
+            <!--课程列表开始-->
+            <div class="post-warp clearfix" id="courseListWrapper">
+                <div th:replace="pages/course-list::courseList"></div>
+            </div>
+            <!--课程列表结束-->
+            <!--课程分页开始-->
+            <div class="blog-pagination">
+                <ul class="flat-pagination" id="coursePagination">
+                </ul>
+            </div>
+            <!--课程分页结束-->
+        </div>
+    </div>
+</section>
+<!--用于存放后端传过来的课程总页数-->
+<input type="hidden" id="pageCount" th:value="${coursePage.pages}">
+<!--分页插件twbs-pagination-->
+<script th:src="@{/plugins/pagination/twbs-pagination.js}" type="text/javascript"></script>
+<script th:inline="javascript">
+    var pageCount = $('#pageCount').val();
+    $('document').ready(function () {
+        // 页面初始化时的课程类别
+        var initialCourseCategory = [[${courseCategory}]];
+        // 选择下拉选择器中 value 为 初始化选择类别的 option， 然后给这个option一个 selected 属性，这样该 option 就会被直接选中。
+        $('#select_category option[value='+initialCourseCategory+']').attr('selected', 'selected');
+        var $pagination = $('#coursePagination');
+        // 按类别加载课程列表
+        function loadPage(page, category) {
+            // 点击页码时异步加载数据
+            $.ajax([[@{/}]]+"course/page/" + category + "/" + page,
+                {
+                    method: "get",
+                    success: function (data) {
+                        $("#courseListWrapper").html(data);
+                        // 获取异步请求结果后，以新的页码重新初配置分页插件。
+                        var currentPageNo = parseInt($('#currentPageNo').val());
+                        var pageCount = $('#pageCount').val();
+                        initilizePagination(pageCount, currentPageNo);
+                    }
+                }
+            );
+        }
+
+        // 初始化分页插件方法
+        function initilizePagination(pageCount,pageNo) {
+            $pagination.twbsPagination({
+                initiateStartPageClick: false, // 插件初始化的时候立即触发onPageClick事件
+                totalPages: pageCount,
+                visiblePages: 7,
+                startPage: pageNo,
+                first:'首页',
+                prev:'上一页',
+                next:'下一页',
+                last:'尾页',
+                onPageClick: function (event, page) {
+                    var currentSelectedCategory = $('#select_category').val();
+                    loadPage(page, currentSelectedCategory);
+                }
+            });
+        }
+
+        // 监听课程类别下接列表，动态加载相对应的课程列表
+        $('#select_category').on('change', function () {
+            var selectedCategory = $(this).val();
+            $pagination.data('twbs-pagination.js',null);
+            loadPage(1, selectedCategory)
+        });
+
+        // 初始化分页插件
+        initilizePagination(pageCount,1);
+    })
+</script>
+</div>

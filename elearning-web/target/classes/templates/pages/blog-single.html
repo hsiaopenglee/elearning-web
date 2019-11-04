@@ -1,0 +1,189 @@
+<div class="boxed" layout:fragment="content" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}" th:with="menuCode='blog'">
+<input type="hidden" id="referenceId" th:value="${blog.id}">
+<input type="hidden" id="commentType" th:value="${commentType}">
+<section class="main-content blog-posts style-v1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog-title-single">
+                    <h1 class="bold"><th th:text="${blog.title}"></th> </h1>
+                    <!--博客内容开始-->
+                    <article class="entry clearfix">
+                        <div class="entry-border">
+                            <div class="main-post">
+                                <div class="wrap-img">
+                                    <img th:src="${blog.teacher.image}" alt="images">
+                                    <h6><th th:text="${blog.teacher.title}"></th> </h6>
+                                    <div class="entry-meta">
+                                        <span class="date"><a href="#"><th
+                                                th:text="${#dates.format(blog.releaseDate,'yyyy年MM月dd日')}"></th> </a></span>
+                                        <span class="comment"><a href="#"><th
+                                                th:text="${commentCount}"></th> 条评论</a></span>
+                                        <!--<span class="tag"><a href="#">HTML相关</a></span>-->
+                                    </div>
+                                </div>
+
+                                <div class="feature-post">
+                                    <img th:src="${blog.image}" alt="image">
+                                </div>
+                                <div>
+                                    <th th:utext="${blog.content}"></th>
+                                </div>
+                            </div>
+
+                            <div class="wrap-share">
+                                <div class="share-post">
+                                    <h4>分享:</h4>
+                                    <ul class="flat-socials">
+                                        <li class="qq">
+                                            <a href="#"><i class="fa fa-qq"></i></a>
+                                        </li>
+                                        <li class="wechat">
+                                            <a href="#"><i class="fa fa-wechat"></i></a>
+                                        </li>
+                                        <li class="weibo">
+                                            <a href="#"><i class="fa fa-weibo" aria-hidden="true"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <!--博客内容结束-->
+                    <!--评论开始-->
+                    <div class="comment-post">
+                        <!--评论列表开始-->
+                        <div class="comment-list-wrap">
+                            <h4 class="title comment-title">评论 (
+                                <th th:text="${commentCount}"></th>
+                                )
+                            </h4>
+                            <ul class="comment-list" id="commentList">
+                                <li th:each="comment:${comments}">
+                                    <article class="comment clear-float">
+                                        <div class="comment-avatar">
+                                            <img th:src="${comment.student.image}" alt="image">
+                                        </div>
+                                        <div class="comment-detail">
+                                            <div class="comment-meta">
+                                                <p class="comment-author"><a href="#">
+                                                    <th th:text="${comment.student.name}"></th>
+                                                </a></p>
+                                                <p class="comment-date"><a href="">
+                                                    <th th:text="${#dates.format(comment.updateTime,'yyyy年MM月dd日')}"></th>
+                                                </a></p>
+                                            </div>
+
+                                            <p class="comment-body">
+                                            <th th:text="${comment.content}"></th>
+                                            </p>
+                                        </div>
+                                    </article>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--评论列表结束-->
+
+                        <!--发布评论开始-->
+                        <div id="respond" class="comment-respond">
+                            <h4 class="title comment-title">评论</h4>
+                            <form class="flat-contact-form">
+                                <textarea class="type-input" tabindex="3" placeholder="内容*" name="message"
+                                          id="commentContent"
+                                          required=""></textarea>
+                                <div class="comment-submit">
+                                    <button class="flat-button bg-orange" id="postComment">发送</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!--发布评论结束-->
+                    </div>
+                    <!--评论结束-->
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <!--博客分类-->
+                <div class="widget widget-categories" xmlns:th="http://www.thymeleaf.org" th:fragment="countOfCategories">
+                        <h5 class="widget-title">分类</h5>
+                    <ul class="unstyled">
+                        <li th:each="blogCategory:${blogCategories}">
+                            <a th:href="@{'/blog/page/'+${blogCategory.id}}" th:attr="categoryId=${blogCategory.id}">
+                                <th th:text="${blogCategory.name}"></th>
+                            </a>
+                            <span class="numb-right">(<th th:text="${blogCategory.blogCount}"></th>)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!--关联的博客开始-->
+                <div class="widget widget-featured-courses">
+                    <h5 class="widget-title">关联的博客</h5>
+                    <ul class="featured-courses-news clearfix">
+                        <li th:each="blog:${relatedBlogs}">
+                            <div class="thumb">
+                                <img th:src="${blog.image}" alt="image">
+                            </div>
+                            <div class="text">
+                                <a th:href="@{'/blog/detail/'+${blog.id}}">
+                                    <th th:text="${blog.title}"></th>
+                                </a>
+                                <p>
+                                <th th:text="${blog.brief}"></th>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--关联的博客结束-->
+            </div>
+        </div>
+    </div>
+
+</section>
+<!--jQuery库-->
+<script type="text/javascript" th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!--bootstrap-->
+<script type="text/javascript" th:src="@{/plugins/bootstrap/js/bootstrap.min.js}"></script>
+<!--调用所有的第三方插件-->
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+    <script th:inline="javascript">
+        $('document').ready(function () {
+            var referenceId, messageContent, commentType;
+            // 在提交评按钮上监听点击事件，点击提交评论。
+            $("#postComment").on('click', function () {
+                referenceId = $('#referenceId').val(); // 博客ID
+                commentType = $('#commentType').val(); // 评论类型
+                messageContent = $('#commentContent').val(); //评论数量
+                // 异步提交评论
+                $.ajax([[@{/}]]+"comment/post",
+                    {
+                        method: "post",
+                        data: {
+                            content: messageContent,
+                            referenceId: referenceId,
+                            typeCode: commentType
+                        },
+                        // 如果提交成功，直接将新提交的评论，直接将后端返回的html追加到评论列表后
+                        success: function (data, status, jqHXR) {
+                            $("#commentList").append(data);
+                            $('#commentContent').val("");
+                        },
+                        // 如果后端返回错误 401 说明当前未登录，直接重定向到登录页面。
+                        complete: function (data, status) {
+                            if (data.status === 401) {
+                                // 后端直接将登录url写到 response 的自定义头部中
+                                var loginUrl = data.getResponseHeader('loginUrl');
+                                location.href = [[@{/}]] +loginUrl;
+                            }
+                        }
+                    }
+                );
+                return false;
+            });
+        });
+
+    </script>
+</div>

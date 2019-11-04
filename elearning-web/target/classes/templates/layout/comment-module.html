@@ -1,0 +1,106 @@
+<div class="author-post">
+ <div class="comment-post">
+  <!--评论列表-->
+  <div class="comment-list-wrap">
+   <h4 class="title comment-title">
+    评论 (
+    <th th:text="${commentCount}" /> )
+   </h4>
+   <ul class="comment-list" id="commentList">
+    <li th:each="comment:${comments}">
+     <!--对文课程章节的评论-->
+     <article class="comment clear-float">
+      <div class="comment-avatar">
+       <img th:src="${comment.student.image}" alt="image">
+      </div>
+      <div class="comment-detail">
+       <div class="comment-meta">
+        <p class="comment-author">
+         <a href="#">
+          <th th:text="${comment.student.name}"></th>
+         </a>
+        </p>
+        <p class="comment-date">
+         <a href="">
+          <th
+          th:text="${#dates.format(comment.createTime,'yyyy-MM-dd hh:mm')}"></th>
+         </a>
+        </p>
+       </div>
+       <p class="comment-body">
+        <th th:text="${comment.content}" />
+       </p>
+      </div>
+     </article> <!--对评论的评论-->
+     <article class="comment style1"
+      th:each="subComment:${comment.subCommentList}">
+      <div class="comment-avatar">
+       <img th:src="${subComment.replyUserImage}" alt="image">
+      </div>
+      <div class="comment-detail">
+       <div class="comment-meta">
+        <p class="comment-author">
+         <a href="#">
+          <th th:text="${subComment.replyUserName}"></th>
+         </a>
+        </p>
+        <p class="comment-date">
+         <a href="">
+          <th
+          th:text="${#dates.format(subComment.createTime,'yyyy-MM-dd hh:mm')}"></th>
+         </a>
+        </p>
+       </div>
+       <p class="comment-body">
+        <th th:text="${subComment.content}"></th>
+       </p>
+      </div>
+     </article>
+    </li>
+   </ul>
+  </div>
+  <!--评论发表-->
+  <div id="respond" class="comment-respond">
+   <h4 class="title comment-title">发表评论</h4>
+   <div class="flat-contact-form" id="commentForm">
+    <textarea class="type-input" tabindex="3" placeholder="评论"
+     name="content" id="commentContent" required=""></textarea>
+    <button class="flat-button bg-orange" id="postComment">发表评论</button>
+   </div>
+  </div>
+ </div>
+ <script th:inline="javascript" type="text/javascript">
+  $('document').ready(function() {
+   var referenceId, messageContent, commentType;
+   // 在提交评按钮上监听点击事件，点击提交评论。
+   $("#postComment").on('click', function() {
+    referenceId = $('#referenceId').val(); // 博客ID
+    commentType = $('#commentType').val(); // 评论类型
+    messageContent = $('#commentContent').val(); //评论数量
+    // 异步提交评论
+    $.ajax([[@{/}]] + "comment/post", {
+     method : "post",
+     data : {
+      content : messageContent,
+      referenceId : referenceId,
+      typeCode : commentType
+     },
+     // 如果提交成功，直接将新提交的评论，直接将后端返回的html追加到评论列表后
+     success : function(data, status, jqHXR) {
+      $("#commentList").append(data);
+      $('#commentContent').val("");
+     },
+     // 如果后端返回错误 401 说明当前未登录，直接重定向到登录页面。
+     complete : function(data, status) {
+      if (data.status === 401) {
+       // 后端直接将登录url写到 response 的自定义头部中
+       var loginUrl = data.getResponseHeader('loginUrl');
+       location.href = [[@{/}]] + loginUrl;
+      }
+     }
+    });
+    return false;
+   });
+  });
+ </script>
+</div>

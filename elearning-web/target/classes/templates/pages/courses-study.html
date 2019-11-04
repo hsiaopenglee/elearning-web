@@ -1,0 +1,18 @@
+<div layout:fragment="content" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout/default}" th:with="menuCode='course'">
+<input type="hidden" id="referenceId" th:value="${chapter.id}">
+<input type="hidden" id="commentType" th:value="${commentType}">
+<section class="main-content blog-posts course-single">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!--视频播放器-->
+                <div class="course-video">
+                    <video th:src="${chapter.video}" controls preload="metadata"></video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>

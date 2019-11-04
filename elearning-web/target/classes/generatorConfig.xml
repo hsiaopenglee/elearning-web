@@ -1,0 +1,83 @@
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<properties resource="application.properties" />
+	<classPathEntry
+		location="D:\JavaEE\apache-maven-3.6.1\maven-repository\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16-sources.jar" />
+	<classPathEntry
+		location="D:\Java-workplace-2\elearning-web\target\classes" />
+	<context id="mysql" defaultModelType="conditional"
+		targetRuntime="MyBatis3">
+		<property name="javaFileEncoding" value="UTF-8" />
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<jdbcConnection
+			driverClass="${spring.datasource.driver-class-name}"
+			connectionURL="${spring.datasource.url}"
+			userId="${spring.datasource.username}"
+			password="${spring.datasource.password}">
+		</jdbcConnection>
+		<javaModelGenerator targetProject="src/main/java"
+			targetPackage="online.shixun.demo.elearning.dto">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+			<property name="rootClass"
+				value="online.shixun.demo.elearning.dto.BaseDto"></property>
+		</javaModelGenerator>
+		<javaClientGenerator type="ANNOTATEDMAPPER"
+			targetProject="src/main/java"
+			targetPackage="online.shixun.demo.elearning.mapper">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<table tableName="so_comment" mapperName="CommentMapper"
+			domainObjectName="Comment">
+		</table>
+		<table tableName="so_blog_category"
+			mapperName="BlogCategoryMapper" domainObjectName="BlogCategory">
+		</table>
+		<table tableName="so_role" mapperName="RoleMapper"
+			domainObjectName="Role">
+		</table>
+		<table tableName="so_user_role" mapperName="UserRoleMapper"
+			domainObjectName="UserRole">
+		</table>
+		<table tableName="so_user" mapperName="StudentMapper"
+			domainObjectName="Student">
+		</table>
+		<table tableName="so_blog" mapperName="BlogMapper"
+			domainObjectName="Blog">
+		</table>
+		<table tableName="so_course_category"
+			mapperName="CourseCategoryMapper" domainObjectName="CourseCategory">
+		</table>
+		<table tableName="so_course" mapperName="CourseMapper"
+			domainObjectName="Course">
+		</table>
+		<table tableName="so_social_media_type"
+			mapperName="SocialMediaTypeMapper" domainObjectName="SocialMediaType">
+		</table>
+		<table tableName="so_user_social_media"
+			mapperName="UserSocialMediaMapper" domainObjectName="UserSocialMedia">
+		</table>
+		<table tableName="so_student" mapperName="StudentMapper"
+			domainObjectName="Student">
+		</table>
+		<table tableName="so_dictionary" mapperName="DictionaryMapper"
+			domainObjectName="Dictionary">
+		</table>
+		<table tableName="so_slide" mapperName="SlideMapper"
+			domainObjectName="Slide" />
+		<table tableName="so_teacher" mapperName="TeacherMapper"
+			domainObjectName="Teacher" />
+		<table tableName="so_course_chapter"
+			mapperName="CourseChapterMapper" domainObjectName="CourseChapter" />
+		<table tableName="so_learning_progress"
+			mapperName="LearningProgressMapper"
+			domainObjectName="LearningProgress" />
+	</context>
+</generatorConfiguration>

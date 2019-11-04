@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "file.upload",
+      "type": "online.shixun.demo.elearning.service.StorageService",
+      "sourceType": "online.shixun.demo.elearning.service.StorageService"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.upload.avatar-path",
+      "type": "java.lang.String",
+      "sourceType": "online.shixun.demo.elearning.service.StorageService"
+    }
+  ],
+  "hints": []
+}

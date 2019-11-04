@@ -1,0 +1,176 @@
+<div xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}" layout:fragment="content"
+	th:with="menuCode='home'">
+
+	<!-- 轮播图 -->
+	<div class="tp-banner-container">
+		<div class="tp-banner">
+			<ul>
+				<li th:each="slide:${slides}" data-transition="random-static"
+					data-slotamount="7" data-masterspeed="1000"
+					data-saveperformance="on"><img th:src="${slide.image}"
+					alt="slider-image" />
+					<div class="tp-caption sfl title-slide center" data-x="174"
+						data-y="250" data-speed="1000" data-start="1000"
+						data-easing="Power3.easeInOut">
+						<th th:text="${slide.title}"></th>
+					</div>
+					<div class="tp-caption sfr desc-slide center" data-x="256"
+						data-y="310" data-speed="1000" data-start="1500"
+						data-easing="Power3.easeInOut">
+						<th th:text="${slide.brief}"></th>
+					</div>
+					<div class="tp-caption sfl flat-button-slider bg-orange"
+						data-x="485" data-y="439" data-speed="1000" data-start="2000"
+						data-easing="Power3.easeInOut">
+						<a class="" href="#">开始实训</a>
+					</div>
+					<div class="tp-caption sfr flat-button-slider" data-x="601"
+						data-y="440" data-speed="1000" data-start="2500"
+						data-easing="Power3.easeInOut">
+						<a class="" href="#">课程试学</a>
+					</div></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="flat-row popular-course">
+		<div class="container">
+			<div class="flat-title-section">
+				<h1 class="title">热门课程</h1>
+			</div>
+
+			<div class="flat-course-grid button-right">
+				<div class="flat-course" th:each="course:${courseList}">
+					<div class="featured-post">
+						<div class="overlay">
+							<div class="link"></div>
+						</div>
+
+						<a th:href="@{'/course/detail/'+${course.id}}"><img
+							th:src="${course.image}" alt="Java"></a>
+					</div>
+					<!-- /.featured-post -->
+
+					<div class="course-content">
+						<h4>
+							<a th:href="@{'/course/detail/'+${course.id}}">
+								<th th:text="${course.title}">
+							</a>
+						</h4>
+
+						<div class="price">
+							<th th:text="${course.currentEnrollNo}">
+						</div>
+
+						<p>
+							<th th:text="${course.brief}"></th>
+						</p>
+
+						<ul class="course-meta desc">
+							<li>
+								<h6>开始报名</h6> <span><th
+									th:text="${#dates.format(course.releaseDate, 'yyyy-MM-dd')}"></th>
+							</span>
+							</li>
+
+							<li>
+								<h6>班级人数</h6> <span><th th:text="${course.classSize}"></th></span>
+							</li>
+
+							<li>
+								<h6>
+									<span class="course-time">课时</span>
+								</h6> <span><th th:text="${course.duration}"></th></span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--报名开始-->
+	<div class="flat-row join-us parallax parallax1 overlay bg-black">
+		<div class="overlay bg-black">
+			<div class="container">
+				<div class="row">
+					<div class="counter-content">
+						<span class="counter-prefix">成为</span>
+						<div class="numb-counter">
+							<div id="waypoint" class="numb-count" data-to="2912093"
+								data-speed="1000" data-waypoint-active="yes">0</div>
+						</div>
+						<span class="counter-suffix">IT精英中的一员</span>
+					</div>
+					<p>截止当前时间，2912093名IT精英从"实训在线"走向工作岗位。无就业不实训！</p>
+					<a href="#" class="flat-button">我要报名</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--报名结束-->
+
+	<!--热门博客-->
+	<div class="flat-row lastest-new">
+		<div class="container">
+			<div class="flat-title-section">
+				<h1 class="title">热门博客</h1>
+			</div>
+
+			<div class="row post-lastest-new">
+				<div class="post col-md-4 col-xs-12 col-sm-6 flat-hover-zoom"
+					th:each="blog:${blogs}">
+					<div class="featured-post">
+						<div class="entry-image">
+							<img th:src="${blog.image}" alt="image">
+						</div>
+					</div>
+
+					<div class="date-post">
+						<span class="numb"><th
+							th:text="${#dates.day(blog.updateTime)}"></th> </span> <span><th
+							th:text="${#dates.month(blog.updateTime)}"></th>月</span>
+					</div>
+
+					<div class="content-post">
+						<h2 class="title-post">
+							<a th:href="@{'/blog/detail/'+${blog.id}}">
+								<th th:text="${blog.title}"></th>
+							</a>
+						</h2>
+
+						<div class="entry-content">
+							<p>
+								<th th:text="${blog.brief}"></th>
+							</p>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!--合作伙伴-->
+	<section class="flat-row partners">
+		<div class="container">
+			<ul class="partners-slider">
+				<li><img alt="owlcarousel-item-img"
+					th:src="@{/images/clients/1.jpg}" /></li>
+				<li><img alt="owlcarousel-item-img"
+					th:src="@{/images/clients/2.jpg}" /></li>
+				<li><img alt="owlcarousel-item-img"
+					th:src="@{/images/clients/3.jpg}" /></li>
+				<li><img alt="owlcarousel-item-img"
+					th:src="@{/images/clients/4.jpg}" /></li>
+				<li><img alt="owlcarousel-item-img"
+					th:src="@{/images/clients/5.jpg}" /></li>
+				<li><img alt="owlcarousel-item-img"
+					th:src="@{/images/clients/6.jpg}" /></li>
+			</ul>
+		</div>
+	</section>
+</div>

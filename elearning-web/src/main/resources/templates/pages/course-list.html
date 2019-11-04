@@ -1,0 +1,40 @@
+<div class="flat-course flat-hover-zoom" xmlns:th="http://www.thymeleaf.org" th:each="course:${coursePage}"
+ th:fragment="courseList">
+<div class="featured-post">
+    <div class="overlay">
+        <div class="link"></div>
+    </div>
+    <div class="entry-image">
+        <a th:href="@{'/course/detail/'+${course.id}}"><img th:src="${course.image}" alt="course"></a>
+    </div>
+</div>
+
+<div class="course-content">
+    <h4><a th:href="@{'/course/detail/'+${course.id}}"><th th:text="${course.title}"></th> </a></h4>
+
+    <div class="price">80人</div>
+
+    <p>
+    <th th:text="${course.brief}"></th>
+    </p>
+
+    <ul class="course-meta desc">
+        <li>
+            <h6>开始报名</h6>
+            <span><th th:text="${#dates.format(course.releaseDate,'yyyy-MM-dd')}"></th></span>
+        </li>
+
+        <li>
+            <h6>班级人数</h6>
+            <span><th th:text="${course.classSize}"></th> </span>
+        </li>
+
+        <li>
+            <h6><span class="course-time">上课时间</span></h6>
+            <span><th th:text="${course.duration}"></th> </span>
+        </li>
+    </ul>
+</div>
+<input type="hidden" th:value="${coursePage.pageNum}" id="currentPageNo">
+<input type="hidden" th:value="${coursePage.pages}" id="pageCount">
+</div>

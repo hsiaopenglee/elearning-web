@@ -1,0 +1,12 @@
+<div class="widget widget-categories" xmlns:th="http://www.thymeleaf.org" th:fragment="countOfCategories">
+    <h5 class="widget-title">分类</h5>
+    <!--/*@thymesVar id="blogCategory" type="online.shixun.demo.elearning.dto.BlogCategory"*/-->
+    <ul class="unstyled">
+        <li th:each="blogCategory:${blogCategories}">
+            <a th:href="@{'/blog/page/'+${blogCategory.id}}" th:attr="categoryId=${blogCategory.id}">
+                <th th:text="${blogCategory.name}"></th>
+            </a>
+            <span class="numb-right">(<th th:text="${blogCategory.blogCount}"></th>)</span>
+        </li>
+    </ul>
+</div>

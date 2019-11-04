@@ -1,0 +1,125 @@
+<section class="main-content blog-posts course-single" layout:fragment="content" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layout/default}" th:with="menuCode='course'">
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="blog-title-single">
+                <h1 class="bold"><th th:text="${course.title}"></th></h1>
+                <!--博客详情开始-->
+                <ul class="course-meta review clearfix">
+                    <li class="author">
+                        <div class="thumb">
+                            <img th:src="${course.teacher.image}" alt="image">
+                        </div>
+
+                        <div class="text">
+                            <a href="#"><th th:text="${course.teacher.name}"></th> </a>
+                            <p><th th:text="${course.teacher.title}"></th> </p>
+                        </div>
+                    </li>
+                    <li class="categories">
+                        <a href="#" class="course-name"><th th:text="${course.courseCategory.name}"></th> </a>
+                        <p>分类</p>
+                    </li>
+
+                    <li>学习人数 <th th:text="${course.currentEnrollNo}"></th> </li>
+                </ul>
+                <!--博客详情结束-->
+                <!--课程缩略图开始-->
+                <div class="feature-post">
+                    <img th:src="${course.image}" alt="image">
+                </div>
+                <!--课程缩略图结束-->
+                <!--课程简介开始-->
+                <div class="entry-content">
+                    <h4 class="title-1 bold">简介</h4>
+                    <p><th th:text="${course.description}"></th>
+                    </p>
+
+                    <!--课程章节开始-->
+                    <ul class="curriculum">
+                        <li class="section">
+                            <h4 class="section-title">课程章节</h4>
+                            <ul class="section-content">
+                                <li class="course-lesson" th:each="chapter:${course.courseChapterList}">
+                                    <a th:href="@{'/course/study/'+${chapter.id}}" class="lesson-title"><th th:text="${chapter.title}"></th> </a>
+                                    <div class="fr">
+                                        <span class="duration"><th th:text="${chapter.duration}"></th> </span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <!--课程章节结束-->
+                </div>
+                <!--课程简介结束-->
+            </div>
+
+        </div>
+
+        <div class="sidebar">
+            <!--课程分类列表开始-->
+            <div class="widget widget-categories">
+                <h5 class="widget-title">分类</h5>
+                <ul>
+                    <li th:each="courseCategory:${categoryList}">
+                        <a th:href="@{'/course/page/'+${courseCategory.id}}"><th th:text="${courseCategory.name}"></th> </a>
+                        <span class="numb-right">(<th th:text="${courseCategory.count}"></th> )</span>
+                    </li>
+                </ul>
+            </div>
+            <!--课程分类列表结束-->
+            <!--关联的讲师列表开始-->
+            <div class="widget widget-teacher">
+                <h5 class="widget-title">关联的老师</h5>
+                <!--<div class="text-teacher">-->
+                    <!--<p>实训在线汇集了很多优秀的前端讲师。</p>-->
+                <!--</div>-->
+                <ul class="teacher-news clearfix">
+                    <li th:each="teacher:${teacherList}">
+                        <div class="thumb">
+                            <img th:src="${teacher.image}" alt="image">
+                        </div>
+                        <div class="text">
+                            <a href="#"><th th:text="${teacher.name}"></th></a>
+                            <p><th th:text="${teacher.title}"></th> </p>
+                        </div>
+                        <ul class="flat-socials">
+                            <li class="qq">
+                                <a href="#"><i class="fa fa-qq"></i></a>
+                            </li>
+                            <li class="wechat">
+                                <a href="#"><i class="fa fa-wechat"></i></a>
+                            </li>
+                            <li class="weibo">
+                                <a href="#"><i class="fa fa-weibo"></i></a>
+                            </li>
+                            <li class="youtube">
+                                <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--关联的讲师列表结束-->
+            <!--关联的课程列表开始-->
+            <div class="widget widget-featured-courses">
+                <h5 class="widget-title">关联的课程</h5>
+                <ul class="featured-courses-news clearfix">
+                    <li th:each="course:${relatedCourseList}">
+                        <div class="thumb">
+                            <img th:src="${course.image}" alt="image">
+                        </div>
+                        <div class="text">
+                            <a href="#"><th th:text="${course.title}"></th> </a>
+                            <p><th th:text="${course.description}"></th> </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--关联的课程列表结束-->
+        </div>
+    </div>
+</div>
+</section>

@@ -1,0 +1,36 @@
+<article class="post flat-hover-zoom" xmlns:th="http://www.thymeleaf.org" th:each="blog:${blogPage}"
+     th:fragment="blogList">
+<div class="featured-post">
+    <div class="entry-image">
+        <a th:href="@{'/blog/detail/'+${blog.id}}">
+            <img th:src="${blog.image}" alt="image">
+        </a>
+    </div>
+</div>
+
+<div class="date-post">
+    <span class="numb">
+        <th th:text="${#dates.day(blog.updateTime)}"></th>
+    </span>
+    <span><th th:text="${#dates.month(blog.updateTime)}"></th>月
+    </span>
+</div>
+
+<div class="content-post">
+    <h2 class="title-post">
+        <a th:href="@{'/blog/detail/'+${blog.id}}">
+            <th th:text="${blog.title}"></th>
+        </a>
+    </h2>
+
+    <div>
+        <p class="blog-brief">
+            <th th:text="${blog.brief}"></th>
+        </p>
+    </div>
+</div>
+
+<!--存储ajax请求获取到的,总页数与当前页-->
+<input type="hidden" id="ajaxPageCount" th:value="${blogPage.pageSize}">
+<input type="hidden" id="ajaxPageNo" th:value="${blogPage.pageNum}">
+</article>
